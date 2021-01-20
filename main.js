@@ -13,8 +13,8 @@ serverSocket.on('connection', (client) => {
     id: client.id,
   });
 
-  client.on('authenticate', ({ meId,  keyIntegration, campaignId, representativeId, bankId, renderId }) => {
 
+  client.on('authenticate', ({ meId, keyIntegration }) => {
     if (meModule.tryToCreateMe(keyIntegration, client) === true) {
       meModule.emitAuthSuccess();
       return;
