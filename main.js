@@ -3,8 +3,8 @@ const {
   serverSocket,
 } = require('./init-server');
 
-const playerModule = require('./player-module');
-const meModule = require('./me-module');
+const renderModule = require('./renderModule-module');
+const menuboardModule = require('./menuboardModule-module');
 
 serverSocket.on('connection', (client) => {
   console.log(`A new client has connected: ${client.id}`);
@@ -13,36 +13,57 @@ serverSocket.on('connection', (client) => {
     id: client.id,
   });
 
+  client.on('authenticate', ({
+    keyIntegration,
+    keyRender,
+    representativeid
+  }) => {
 
-  client.on('authenticate', ({ meId, keyIntegration }) => {
-    if (meModule.tryToCreateMe(keyIntegration, client) === true) {
-      meModule.emitAuthSuccess();
+    if (renderModule.tryToAuthenticate({
+        keyIntegration: keyIntegration,
+        keyRender: keyRender,
+        client: client,
+        clientid: client.id
+
+      }) == true) {
+
+      renderModule.emitAuthSuccess(client.id);
       return;
     }
 
-    if (playerModule.tryToCreatePlayer(keyIntegration, meId, client) === true) {
-      playerModule.emitAuthSuccess(meId);
+    if (menuboardModule.tryToAuthenticate({
+        keyIntegration: keyIntegration,
+        client: client,
+        clientid: client.id,
+        representativeid: representativeid
+      }) == true) {
+
+      menuboardModule.emitAuthSuccess(client.id);
       return;
     }
 
-    client.emit('authentication-error', { message: 'Client unknown' });
+    client.emit('authentication-error', {
+      message: 'Client desconhecido'
+    });
     client.disconnect();
   });
 
-  client.on('send-player-download-request', ({ playerMeId, imageId }) => {
-    if (meModule.isMeApplication(client.id)) {
-      playerModule.emitDownloadImage(playerMeId, imageId);
-    }
+  client.on('alter-status-project', ({
+    projectaftermakeid,
+    midiaid,
+    representativeid,
+    status
+  }) => {
+    menuboardModule.alterStatusProject({
+      projectaftermakeid: projectaftermakeid,
+      midiaid: midiaid,
+      representativeid: representativeid,
+      status:status
+    })
   });
 
-  client.on('disconnect', () => {
-    if (meModule.isMeApplication(client.id)) {
-      meModule.clearClient();
-      return;
-    }
-    
-    playerModule.removePlayerBySocketId(client.id);
-  });
+
+
 });
 
 
