@@ -67,6 +67,6 @@ serverSocket.on('connection', (client) => {
 });
 
 
-httpServer.listen(5001, () => {
+httpServer.listen(env('PORT'), () => {
   console.log('Application initialized at port 5001');
 });
