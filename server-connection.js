@@ -27,8 +27,8 @@ function resolveCertificatePath() {
   }
 
   return {
-    certCer: fs.readFileSync('/root/.acme.sh/me-socket.wiplay.com.br/fullchain.cer'),
-    certKey: fs.readFileSync('/root/.acme.sh/me-socket.wiplay.com.br/me-socket.wiplay.com.br.key'),
+    certCer: fs.readFileSync('/certificados/socket.menuboard.com.br/fullchain.cer'),
+    certKey: fs.readFileSync('/certificados/socket.menuboard.com.br/socket.menuboard.com.br.key'),
   }
 }
 
