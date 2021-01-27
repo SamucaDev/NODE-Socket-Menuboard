@@ -36,12 +36,19 @@ module.exports = {
     });
   },
 
+  removeItemsArray: function (clientid) {
+
+    this.clients = this.clients.filter(client => client.clientid != clientid);
+
+  },
+
 
   alterStatusProject: function ({
-    projectaftermakeid,
+    projectid,
     midiaid,
     representativeid,
-    status
+    status,
+    typeRequest
   }) {
     const clients = this.clients.find(client => client.representativeid == representativeid);
 
@@ -50,11 +57,14 @@ module.exports = {
 
     clients.socket.emit('alter-status', {
       midiaid: midiaid,
-      projectaftermakeid: projectaftermakeid,
+      projectid: projectid,
       status: status,
+      typeRequest: typeRequest //  1 - after 0 - video  
     });
 
   }
+
+
 
 
 };

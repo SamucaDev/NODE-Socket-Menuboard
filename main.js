@@ -63,6 +63,13 @@ serverSocket.on('connection', (client) => {
   });
 
 
+  client.on('disconnect', () => {
+    // chamar o módulo para remover o client da lista a partir do id dele
+
+    menuboardModule.removeItemsArray(client.id)
+    renderModule.removeItemsArray(client.id)
+  });
+
 
 });
 

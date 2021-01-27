@@ -24,6 +24,11 @@ module.exports = {
   },
 
 
+  removeItemsArray: function (clientid) {
+
+    this.players = this.players.filter(client => client.clientid != clientid);
+
+  },
 
   emitAuthSuccess: function (id) {
     const client = this.players.find((client) => client.socket.id == id);
