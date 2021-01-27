@@ -49,16 +49,19 @@ serverSocket.on('connection', (client) => {
   });
 
   client.on('alter-status-project', ({
-    projectaftermakeid,
+    projectid,
     midiaid,
     representativeid,
-    status
+    status,
+    typeRequest
   }) => {
     menuboardModule.alterStatusProject({
-      projectaftermakeid: projectaftermakeid,
+      projectid: projectid,
       midiaid: midiaid,
       representativeid: representativeid,
-      status:status
+      status: status,
+      typeRequest: typeRequest
+
     })
   });
 
@@ -75,5 +78,5 @@ serverSocket.on('connection', (client) => {
 
 
 httpServer.listen(process.env.PORT, () => {
-  console.log('Application initialized at port 5001');
+  console.log('Application initialized at port ' + process.env.PORT);
 });
