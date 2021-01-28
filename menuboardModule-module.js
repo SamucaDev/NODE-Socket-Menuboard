@@ -48,7 +48,8 @@ module.exports = {
     midiaid,
     representativeid,
     status,
-    typeRequest
+    typeRequest,
+    frame
   }) {
     const clients = this.clients.find(client => client.representativeid == representativeid);
 
@@ -59,8 +60,15 @@ module.exports = {
       midiaid: midiaid,
       projectid: projectid,
       status: status,
-      typeRequest: typeRequest //  1 - after 0 - video  
+      typeRequest: typeRequest, //  1 - after 0 - video  
+      frame: frame 
     });
+
+    console.log(midiaid);
+    console.log(projectid);
+    console.log(status);
+    console.log(typeRequest);
+    console.log(frame);
 
   }
 
