@@ -54,7 +54,8 @@ serverSocket.on('connection', (client) => {
     representativeid,
     status,
     typeRequest,
-    frame
+    frame,
+    message
   }) => {
     menuboardModule.alterStatusProject({
       projectid: projectid,
@@ -62,7 +63,8 @@ serverSocket.on('connection', (client) => {
       representativeid: representativeid,
       status: status,
       typeRequest: typeRequest,
-      frame: frame
+      frame: frame,
+      message: message
 
     })
   });
